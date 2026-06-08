@@ -17,11 +17,35 @@ body{background:#08111f;color:white;}
 .footer-copy{margin-top:15px;font-size:12px;color:#bbb;}
 .hidden{display:none;}
 .auth-screen{min-height:100vh;display:flex;justify-content:center;align-items:center;}
-.remember-row{display:flex;align-items:center;gap:4px;margin:6px 0 10px;white-space:nowrap;}
-.remember-row input{width:auto;margin:0;padding:0;}
+.remember-row{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:6px;
+    margin:12px 0;
+    padding-left:4px;
+}
+
+.remember-row input[type="checkbox"]{
+    width:16px;
+    height:16px;
+    margin:0;
+    padding:0;
+}
+
+.remember-row label{
+    margin:0;
+    cursor:pointer;
+}
 .auth-box{background:#132238;padding:30px;border-radius:15px;width:320px;}
 .auth-box h1{text-align:center;margin-bottom:20px;}
-.auth-box input{width:100%;padding:12px;margin-bottom:10px;border:none;border-radius:8px;}
+.auth-box input:not([type="checkbox"]){
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border:none;
+    border-radius:8px;
+}
 .auth-box button,.hero-watch-btn{padding:12px;border:none;border-radius:8px;background:#0063e5;color:white;cursor:pointer;}
 .auth-box button{width:100%;}
 header{display:flex;justify-content:space-between;align-items:center;padding:20px;background:#0d1b2d;}
@@ -83,9 +107,13 @@ header{display:flex;justify-content:space-between;align-items:center;padding:20p
 <h1>Wisney+</h1>
 <input id="username" placeholder="Username">
 <input id="password" type="password" placeholder="Password">
-<br><br>
-<label class="remember-row"><input type="checkbox" id="rememberMe"><span>Keep me signed in</span></label>
+<br>
+<div class="remember-row">
+<input type="checkbox" id="rememberMe">
+<label for="rememberMe">Keep me signed in</label>
+</div>
 <button onclick="loginOrSignup()">Login / Sign Up</button>
+<br><br>
 <p>First time? Just enter a new username and password.</p>
 </div>
 </div>
@@ -128,6 +156,8 @@ header{display:flex;justify-content:space-between;align-items:center;padding:20p
 </button>
 
         <h1 id="movieTitle"></h1>
+
+        <br>
 
         <h3 id="movieRating"></h3>
 
