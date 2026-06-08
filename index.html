@@ -322,9 +322,66 @@ function playMovie(){
     document.getElementById("videoPage")
         .classList.remove("hidden");
 
-    document.getElementById("moviePlayer")
-        .src =
-        currentMovie.video;
+    const player =
+        document.getElementById("moviePlayer");
+
+    player.src = currentMovie.video;
+
+    player.onloadedmetadata = () => {
+
+        const savedTime =
+            localStorage.getItem(
+                "progress_" + currentMovie.title
+            );
+
+        if(savedTime){
+            player.currentTime = savedTime;
+        }
+    };
+
+    player.ontimeupdate = () => {
+
+        localStorage.setItem(
+            "progress_" + currentMovie.title,
+            player.currentTime
+        );
+
+        updateContinueWatching(
+            currentMovie.title,
+            player.currentTime,
+            player.duration
+        );
+    };
+}
+
+function updateContinueWatching(
+    title,
+    currentTime,
+    duration
+){
+
+    if(!duration) return;
+
+    const percent =
+        Math.floor(
+            (currentTime / duration) * 100
+        );
+
+    const user = currentUserData();
+
+    user.continueWatching =
+        user.continueWatching.filter(
+            movie => movie.title !== title
+        );
+
+    user.continueWatching.push({
+        title:title,
+        progress:percent
+    });
+
+    saveCurrentUserData(user);
+
+    renderContinueWatching();
 }
 
 function backToMovie(){
