@@ -183,12 +183,11 @@
             overflow: hidden;
         }
 
-        .poster {
-            height: 250px;
-            background: #28476f;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .poster{
+            height:250px;
+            width:100%;
+            object-fit:cover;
+            display:block;
         }
 
         .card-content {
@@ -368,28 +367,32 @@
     <script>
         document.body.classList.add("login-mode");
 
-        const movies = [{
-                title: "Ricky Rat",
-                rating: "PG",
-                description: "Wisney's biggest original series.",
-                background: "https://picsum.photos/id/1018/1200/500",
-                video: "https://wisney31.github.io/Wisney/videos/Test_Video.mp4"
-            },
-            {
-                title: "Test-1",
-                rating: "TV-Y",
-                description: "You smell like beef and cheese.",
-                background: "https://picsum.photos/id/1015/1200/500",
-                video: "https://wisney31.github.io/Wisney/videos/Test_Video.mp4"
-            },
-            {
-                title: "Test-2",
-                rating: "PG",
-                description: "You sit on a throne of lies.",
-                background: "https://picsum.photos/id/1016/1200/500",
-                video: "https://wisney31.github.io/Wisney/videos/Test_Video.mp4"
-            }
-        ];
+        const movies = [
+{
+title:"Ricky Rat",
+rating:"PG",
+description:"Wisney's biggest original series.",
+thumbnail:"https://picsum.photos/id/237/300/450",
+background:"https://picsum.photos/id/1018/1200/500",
+video:"https://www.w3schools.com/html/mov_bbb.mp4"
+},
+{
+title:"Test-1",
+rating:"TV-Y",
+description:"You smell like beef and cheese.",
+thumbnail:"https://picsum.photos/id/238/300/450",
+background:"https://picsum.photos/id/1015/1200/500",
+video:"https://www.w3schools.com/html/mov_bbb.mp4"
+},
+{
+title:"Test-2",
+rating:"PG",
+description:"You sit on a throne of lies.",
+thumbnail:"https://picsum.photos/id/239/300/450",
+background:"https://picsum.photos/id/1016/1200/500",
+video:"https://www.w3schools.com/html/mov_bbb.mp4"
+}
+];
         const featuredShows = [{
                 title: "Ricky Rat",
                 desc: "Wisney's biggest original series.",
@@ -638,9 +641,10 @@
                     container.innerHTML += `
     <div class="card">
 
-        <div class="poster">
-            ${movie.title}
-        </div>
+        <img
+    class="poster"
+    src="${movie.thumbnail}"
+    alt="${movie.title}">
 
         <div class="card-content">
 
@@ -664,13 +668,17 @@
         function renderFavorites() {
             const c = document.getElementById("favorites");
             c.innerHTML = "";
-            currentUserData().favorites.forEach(movie => c.innerHTML += `<div class="card"><div class="poster">${movie}</div></div>`);
+            currentUserData().favorites.forEach(movie => c.innerHTML += `<div class="card"><img
+    class="poster"
+    src="${movies.find(m=>m.title===movie).thumbnail}"></div>`);
         }
 
         function renderContinueWatching() {
             const c = document.getElementById("continueWatching");
             c.innerHTML = "";
-            currentUserData().continueWatching.forEach(movie => c.innerHTML += `<div class="card"><div class="poster">${movie.title}</div><div class="card-content">${movie.progress}% watched<div class="progress"><div class="progress-fill" style="width:${movie.progress}%"></div></div></div></div>`);
+            currentUserData().continueWatching.forEach(movie => c.innerHTML += `<div class="card"><img
+    class="poster"
+    src="${movies.find(m=>m.title===movie.title).thumbnail}"><div class="card-content">${movie.progress}% watched<div class="progress"><div class="progress-fill" style="width:${movie.progress}%"></div></div></div></div>`);
         }
 
         function startSlider() {
