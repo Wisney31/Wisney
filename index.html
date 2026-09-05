@@ -660,8 +660,8 @@
                     <div class="card">
                         <img class="poster" src="${movie.thumbnail}" alt="${movie.title}">
                         <div class="card-content">
-                            <button onclick="openMovie('${movie.title}')">View</button>
-                            <button onclick="toggleFavorite('${movie.title}')">
+                            <button onclick='openMovie(${JSON.stringify(movie.title)})'>View</button>
+                            <button onclick='toggleFavorite(${JSON.stringify(movie.title)})'>
                                 ${favorite ? "Remove Favorite" : "Add Favorite"}
                             </button>
                         </div>
@@ -681,7 +681,7 @@
                 if (!m) return;
 
                 c.innerHTML += `
-                <div class="card" onclick="openMovie('${m.title}')" style="cursor:pointer;">
+                <div class="card" onclick="onclick='openMovie(${JSON.stringify(m.title)})' style="cursor:pointer;">
                     <img class="poster" src="${m.thumbnail}">
                 </div>`;
             });
@@ -699,7 +699,7 @@
                 if (!m) return;
 
                 c.innerHTML += `
-                <div class="card" onclick="openMovie('${m.title}')" style="cursor:pointer;">
+                <div class="card" onclick='openMovie(${JSON.stringify(m.title)})' style="cursor:pointer;">
                     <img class="poster" src="${m.thumbnail}">
                     <div class="card-content">
                         ${movie.progress}% watched
