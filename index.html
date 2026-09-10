@@ -643,31 +643,59 @@
         }
 
         function renderMovies() {
-            const container = document.getElementById("movies");
-            const searchInput = document.getElementById("searchBox");
-            const search = searchInput ? searchInput.value.toLowerCase() : "";
-            container.innerHTML = "";
+    const container = document.getElementById("movies");
+    const searchInput = document.getElementById("searchBox");
+    const search = searchInput ? searchInput.value.toLowerCase() : "";
 
-            const user = currentUserData();
-            if (!user) return;
-            if (!user.favorites) user.favorites = [];
+    container.innerHTML = "";
 
-            movies
-                .filter(movie => movie.title.toLowerCase().includes(search))
-                .forEach(movie => {
-                    const favorite = user.favorites.includes(movie.title);
-                    container.innerHTML += `
-                    <div class="card">
-                        <img class="poster" src="${movie.thumbnail}" alt="${movie.title}">
-                        <div class="card-content">
-                            <button onclick='openMovie(${JSON.stringify(movie.title)})'>View</button>
-                            <button onclick='toggleFavorite(${JSON.stringify(movie.title)})'>
-                                ${favorite ? "Remove Favorite" : "Add Favorite"}
-                            </button>
-                        </div>
-                    </div>`;
-                });
-        }
+    const user = currentUserData();
+    if (!user) return;
+
+    if (!user.favorites) user.favorites = [];
+
+    movies
+        .filter(movie => movie.title.toLowerCase().includes(search))
+        .forEach(movie => {
+
+            const favorite = user.favorites.includes(movie.title);
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const poster = document.createElement("img");
+            poster.className = "poster";
+            poster.src = movie.thumbnail;
+            poster.alt = movie.title;
+
+            const content = document.createElement("div");
+            content.className = "card-content";
+
+            const viewButton = document.createElement("button");
+            viewButton.textContent = "View";
+
+            viewButton.addEventListener("click", function () {
+                openMovie(movie.title);
+            });
+
+            const favoriteButton = document.createElement("button");
+            favoriteButton.textContent = favorite
+                ? "Remove Favorite"
+                : "Add Favorite";
+
+            favoriteButton.addEventListener("click", function () {
+                toggleFavorite(movie.title);
+            });
+
+            content.appendChild(viewButton);
+            content.appendChild(favoriteButton);
+
+            card.appendChild(poster);
+            card.appendChild(content);
+
+            container.appendChild(card);
+        });
+}
 
         function renderFavorites() {
             const c = document.getElementById("favorites");
